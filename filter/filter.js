@@ -15,7 +15,7 @@ let users = [
         "name": "Howard",
         "email": "eu.lacus@dis.ca",
         "company": "Nam Interdum Company",
-        completed : false
+        completed : true
     },
     {
         "name": "Mallory",
@@ -31,16 +31,23 @@ let users = [
     }
 ];
 
+const filters = {
+    searchValue : "",
+
+}
+
+
 const addToDO = document.querySelector("#addToDO");
 let info = document.querySelector("#info");
 
-let searchValue = "";
 
-let filterInfo = function (users,searchValue){
+let filterInfo = function (users,filters){
 
-    let filteringInfoUsers = users.filter((user)=>{
-        return user.name.toUpperCase().includes(searchValue.toUpperCase());
-    })
+      let filteringInfoUsers = users.filter((user)=>{
+            let searchByName =  user.name.toUpperCase().includes(filters.searchValue.toUpperCase());
+            let hideCompleted = !filters.hideCompleted || !user.completed
+          return searchByName && hideCompleted;
+      })
 
     info.innerHTML = "";
 
@@ -51,12 +58,12 @@ let filterInfo = function (users,searchValue){
     });
 }
 
-filterInfo(users,searchValue);
+filterInfo(users,filters);
 
 
 document.querySelector("#searchInput").addEventListener("input",function (e){
-    searchValue = e.target.value;
-    filterInfo(users,searchValue);
+    filters.searchValue = e.target.value;
+    filterInfo(users,filters);
 })
 
 document.querySelector("#addToDO").addEventListener("submit",function (e){
@@ -66,9 +73,12 @@ document.querySelector("#addToDO").addEventListener("submit",function (e){
         "name": e.target.elements.todo.value,
          completed : false,
     })
-
-    filterInfo(users,searchValue)
-
+    filterInfo(users,filters)
     e.target.elements.todo.value  = ""
+})
+
+document.querySelector("#hide-completed").addEventListener("change",function (e){
+    filters.hideCompleted = e.target.checked;
+    filterInfo(users,filters)
 
 })
