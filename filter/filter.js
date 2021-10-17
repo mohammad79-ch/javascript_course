@@ -2,30 +2,36 @@ let users = [
     {
         "name": "Calvin",
         "email": "a.tortor.nunc@auctorvitaealiquet.co.uk",
-        "company": "Ante Iaculis Institute"
+        "company": "Ante Iaculis Institute",
+        completed : false
     },
     {
         "name": "Alexander",
         "email": "mauris.ut@eget.net",
-        "company": "Nonummy Ut Corp."
+        "company": "Nonummy Ut Corp.",
+        completed : false
     },
     {
         "name": "Howard",
         "email": "eu.lacus@dis.ca",
-        "company": "Nam Interdum Company"
+        "company": "Nam Interdum Company",
+        completed : false
     },
     {
         "name": "Mallory",
         "email": "metus@estmollis.edu",
-        "company": "Erat Nonummy Limited"
+        "company": "Erat Nonummy Limited",
+        completed : false
     },
     {
         "name": "Jessica",
         "email": "posuere.enim.nisl@molestie.co.uk",
-        "company": "Nibh Sit LLP"
+        "company": "Nibh Sit LLP",
+        completed : false
     }
 ];
 
+const addToDO = document.querySelector("#addToDO");
 let info = document.querySelector("#info");
 
 let searchValue = "";
@@ -51,4 +57,18 @@ filterInfo(users,searchValue);
 document.querySelector("#searchInput").addEventListener("input",function (e){
     searchValue = e.target.value;
     filterInfo(users,searchValue);
+})
+
+document.querySelector("#addToDO").addEventListener("submit",function (e){
+    e.preventDefault();
+
+    users.push({
+        "name": e.target.elements.todo.value,
+         completed : false,
+    })
+
+    filterInfo(users,searchValue)
+
+    e.target.elements.todo.value  = ""
+
 })
