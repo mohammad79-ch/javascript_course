@@ -1,49 +1,23 @@
-let users = [
-    {
-        "name": "Calvin",
-        "email": "a.tortor.nunc@auctorvitaealiquet.co.uk",
-        "company": "Ante Iaculis Institute",
-        completed : false
-    },
-    {
-        "name": "Alexander",
-        "email": "mauris.ut@eget.net",
-        "company": "Nonummy Ut Corp.",
-        completed : false
-    },
-    {
-        "name": "Howard",
-        "email": "eu.lacus@dis.ca",
-        "company": "Nam Interdum Company",
-        completed : true
-    },
-    {
-        "name": "Mallory",
-        "email": "metus@estmollis.edu",
-        "company": "Erat Nonummy Limited",
-        completed : false
-    },
-    {
-        "name": "Jessica",
-        "email": "posuere.enim.nisl@molestie.co.uk",
-        "company": "Nibh Sit LLP",
-        completed : false
-    }
-];
+let notes = [];
 
 const filters = {
     searchValue : "",
 
 }
 
+let notesJson = localStorage.getItem("notes");
 
-const addToDO = document.querySelector("#addToDO");
+if (notesJson != null){
+    notes = JSON.parse(notesJson);
+}
+
+
 let info = document.querySelector("#info");
 
 
-let filterInfo = function (users,filters){
+let filterInfo = function (notes,filters){
 
-      let filteringInfoUsers = users.filter((user)=>{
+      let filteringInfoUsers = notes.filter((user) => {
             let searchByName =  user.name.toUpperCase().includes(filters.searchValue.toUpperCase());
             let hideCompleted = !filters.hideCompleted || !user.completed
           return searchByName && hideCompleted;
@@ -58,27 +32,31 @@ let filterInfo = function (users,filters){
     });
 }
 
-filterInfo(users,filters);
+filterInfo(notes,filters);
 
 
 document.querySelector("#searchInput").addEventListener("input",function (e){
     filters.searchValue = e.target.value;
-    filterInfo(users,filters);
+    filterInfo(notes,filters);
 })
 
 document.querySelector("#addToDO").addEventListener("submit",function (e){
     e.preventDefault();
 
-    users.push({
+    notes.push({
         "name": e.target.elements.todo.value,
          completed : false,
     })
-    filterInfo(users,filters)
+
+    localStorage.setItem("notes",JSON.stringify(notes));
+
+    filterInfo(notes,filters)
+
     e.target.elements.todo.value  = ""
 })
 
 document.querySelector("#hide-completed").addEventListener("change",function (e){
     filters.hideCompleted = e.target.checked;
-    filterInfo(users,filters)
+    filterInfo(notes,filters)
 
 })
