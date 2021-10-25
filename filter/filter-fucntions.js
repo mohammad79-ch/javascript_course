@@ -12,10 +12,17 @@ let getItemNotes = function (){
 let generateElementDOM = function (user){
     let noteElement = document.createElement("div");
     let pElement = document.createElement("p");
+    let checkbox = document.createElement("input");
     let btn = document.createElement("button");
-    btn.classList.add("btn","btn-danger","btn-sm");
-
+    
+    btn.classList.add("btn","btn-light","btn-sm");
+    noteElement.classList.add("p-2","d-flex")
+    checkbox.classList.add("m-2")
+    checkbox.setAttribute("type","checkbox");
+    
     btn.textContent = "delete";
+
+    noteElement.appendChild(checkbox);
 
     pElement.textContent = user.name;
 
@@ -49,6 +56,7 @@ let saveNotes = function (){
 
 let pushNoteToArray = function (e){
     notes.push({
+        id : uuidv4(),
         "name": e.target.elements.todo.value,
         completed : false
     })
