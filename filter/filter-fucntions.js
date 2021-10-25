@@ -10,9 +10,20 @@ let getItemNotes = function (){
 }
 
 let generateElementDOM = function (user){
+    let noteElement = document.createElement("div");
     let pElement = document.createElement("p");
+    let btn = document.createElement("button");
+    btn.classList.add("btn","btn-danger","btn-sm");
+
+    btn.textContent = "delete";
+
     pElement.textContent = user.name;
-    return info.appendChild(pElement);
+
+    pElement.appendChild(btn);
+
+    noteElement.appendChild(pElement);
+
+    return info.appendChild(noteElement);
 }
 
 let renderNote = function (notes,filters){
