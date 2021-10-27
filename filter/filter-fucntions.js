@@ -9,42 +9,79 @@ let getItemNotes = function (){
     return [];
 }
 
-let generateElementDOM = function (user){
+let removeNote = function (id){
+    let findIndexNote = notes.findIndex(function (note){
+        return note.id === id;
+    });
+    if (findIndexNote > -1){
+        notes.splice(findIndexNote,1);
+    }
+}
+
+let toggleCheckbox = function (e,id) {
+         notes.map(function (note) {
+             if (note.id === id) {
+                 note.completed = !note.completed;
+             }
+         })
+}
+
+let generateElementDOM = function (note){
     let noteElement = document.createElement("div");
-    let pElement = document.createElement("p");
+    let aElement = document.createElement("a");
     let checkbox = document.createElement("input");
     let btn = document.createElement("button");
     
     btn.classList.add("btn","btn-light","btn-sm");
+
+
+
     noteElement.classList.add("p-2","d-flex")
     checkbox.classList.add("m-2")
     checkbox.setAttribute("type","checkbox");
     
-    btn.textContent = "delete";
+    btn.textContent = "X";
+
+    btn.addEventListener("click",function (e){
+        e.preventDefault();
+        removeNote(note.id);
+        saveNotes();
+        renderNote(notes,filters)
+    })
+
+    checkbox.addEventListener("change",function (e){
+        toggleCheckbox(e,note.id);
+        saveNotes();
+        renderNote(notes,filters)
+    })
 
     noteElement.appendChild(checkbox);
 
-    pElement.textContent = user.name;
+    aElement.textContent = note.name;
 
-    pElement.appendChild(btn);
+    aElement.appendChild(btn);
 
-    noteElement.appendChild(pElement);
+    aElement.setAttribute("href",`/javascript/filter/edit.html#${note.id}`)
+
+    noteElement.appendChild(aElement);
+
+    checkbox.checked = note.completed;
 
     return info.appendChild(noteElement);
 }
 
 let renderNote = function (notes,filters){
 
-    let filteringInfoUsers = notes.filter((user) => {
-        let searchByName =  user.name.toUpperCase().includes(filters.searchValue.toUpperCase());
-        let hideCompleted = !filters.hideCompleted || !user.completed
+    let filteringInfoUsers = notes.filter((note) => {
+        let searchByName =  note.name.toUpperCase().includes(filters.searchValue.toUpperCase());
+        let hideCompleted = !filters.hideCompleted || !note.completed
         return searchByName && hideCompleted;
     })
 
     info.innerHTML = "";
 
-    filteringInfoUsers.forEach((user)=>{
-        generateElementDOM(user)
+    filteringInfoUsers.forEach((note)=>{
+        generateElementDOM(note)
     });
 
     return this;
