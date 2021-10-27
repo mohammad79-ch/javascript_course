@@ -28,7 +28,7 @@ let toggleCheckbox = function (e,id) {
 
 let generateElementDOM = function (note){
     let noteElement = document.createElement("div");
-    let pElement = document.createElement("p");
+    let aElement = document.createElement("a");
     let checkbox = document.createElement("input");
     let btn = document.createElement("button");
     
@@ -42,7 +42,8 @@ let generateElementDOM = function (note){
     
     btn.textContent = "X";
 
-    btn.addEventListener("click",function (){
+    btn.addEventListener("click",function (e){
+        e.preventDefault();
         removeNote(note.id);
         saveNotes();
         renderNote(notes,filters)
@@ -56,11 +57,13 @@ let generateElementDOM = function (note){
 
     noteElement.appendChild(checkbox);
 
-    pElement.textContent = note.name;
+    aElement.textContent = note.name;
 
-    pElement.appendChild(btn);
+    aElement.appendChild(btn);
 
-    noteElement.appendChild(pElement);
+    aElement.setAttribute("href",`/javascript/filter/edit.html#${note.id}`)
+
+    noteElement.appendChild(aElement);
 
     checkbox.checked = note.completed;
 

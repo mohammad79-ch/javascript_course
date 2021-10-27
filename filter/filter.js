@@ -30,5 +30,11 @@ document.querySelector("#addToDO").addEventListener("submit",function (e){
 document.querySelector("#hide-completed").addEventListener("change",function (e){
     filters.hideCompleted = e.target.checked;
     renderNote(notes,filters)
+})
 
+window.addEventListener('storage',function (e){
+    if (e.key === "notes"){
+       notes = JSON.parse(e.newValue);
+       renderNote(notes,filters)
+    }
 })
