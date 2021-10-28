@@ -4,6 +4,7 @@ let info = document.querySelector("#info");
 
 const filters = {
     searchValue : "",
+    sortBy : "lastEdited"
 
 }
 
@@ -37,4 +38,9 @@ window.addEventListener('storage',function (e){
        notes = JSON.parse(e.newValue);
        renderNote(notes,filters)
     }
+})
+
+document.getElementById("selectSort").addEventListener("change",function (e){
+    filters.sortBy = e.target.value;
+    renderNote(notes,filters)
 })

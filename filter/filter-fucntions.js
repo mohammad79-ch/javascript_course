@@ -70,8 +70,45 @@ let generateElementDOM = function (note){
     return info.appendChild(noteElement);
 }
 
-let renderNote = function (notes,filters){
+let sortNotes = function (notes,sortBy){
+    if (sortBy === "lastEdited"){
+        return notes.sort(function (a,b){
+            if (a.updated_at < b.updated_at){
+                return 1;
+            }else if(a.updated_at > b.updated_at){
+                return -1
+            }else{
+                return 0
+            }
+        })
+    }else if(sortBy === "created_at"){
+        return notes.sort(function (a,b){
+            if (a.created_at < b.created_at){
+                return 1
+            }else if(a.created_at > b.created_at){
+                return -1
+            }else {
+                return 0
+            }
+        })
+    }else if(sortBy === "alphabet") {
+        return notes.sort(function (a, b) {
+            if (a.name.toUpperCase() < b.name.toUpperCase()) {
+                return -1
+            } else if (a.name.toUpperCase() > b.name.toUpperCase()) {
+                return 1
+            } else {
+                return 0
+            }
+        })
+    }
+    else{
+        return notes;
+    }
+}
 
+let renderNote = function (notes,filters){
+    notes = sortNotes(notes,filters.sortBy)
     let filteringInfoUsers = notes.filter((note) => {
         let searchByName =  note.name.toUpperCase().includes(filters.searchValue.toUpperCase());
         let hideCompleted = !filters.hideCompleted || !note.completed
@@ -92,9 +129,20 @@ let saveNotes = function (){
 }
 
 let pushNoteToArray = function (e){
+
+    let timestamp = moment().valueOf()
+
     notes.push({
         id : uuidv4(),
         "name": e.target.elements.todo.value,
-        completed : false
+        completed : false,
+        "created_at": timestamp,
+        "updated_at": timestamp,
     })
+
 }
+
+let generateLastUpdaterd = function (timestamp){
+    return `Last updated ${moment(timestamp).fromNow()}`
+}
+
