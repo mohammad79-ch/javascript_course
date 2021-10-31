@@ -4,8 +4,11 @@ let emailInput = document.getElementById("email");
 let passwordInput = document.getElementById("password")
 let users = document.getElementById("users");
 let tbodyTable = document.getElementById("tbodyTable");
+let search = document.getElementById("search");
 
-let getUsersFromLccalStorage = function (){
+
+
+let getUsersFromLccalStorage = () => {
     let usersAll = localStorage.getItem("users")
 
     return JSON.parse(usersAll);
@@ -13,7 +16,7 @@ let getUsersFromLccalStorage = function (){
 
 let usersArray = getUsersFromLccalStorage();
 
-let validateInput = function() {
+let validateInput = () => {
 
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -43,7 +46,7 @@ let validateInput = function() {
     return status;
 }
 
-registerForm.addEventListener("submit",function (e){
+registerForm.addEventListener("submit",(e) => {
     tbodyTable.innerHTML = "";
     e.preventDefault();
 
@@ -56,23 +59,32 @@ registerForm.addEventListener("submit",function (e){
 
     usersArray.push({
         name : nameInput.value,
-        emailInput : emailInput.value,
-        passwordInput : passwordInput.value,
+        email : emailInput.value,
+        password : passwordInput.value,
     })
 
     localStorage.setItem("users",JSON.stringify(usersArray));
 
-    renderUsers()
+    renderUsers(search.value)
 
 
 })
 
-
-let renderUsers = function (){
+let renderUsers = (searcher) => {
 
     let getUsers = getUsersFromLccalStorage();
 
     if (getUsers !== null){
+
+        if (searcher){
+          tbodyTable.textContent = "";
+         getUsers = getUsers.filter((user)=>{
+             return user.name.toUpperCase().includes(searcher.toUpperCase());
+         })
+            console.log(getUsers)
+
+        }
+
         getUsers.forEach(item =>{
             let tr = document.createElement("tr");
             tr.innerHTML = `
@@ -86,5 +98,17 @@ let renderUsers = function (){
 }
 
 window.addEventListener("DOMContentLoaded",(e)=>{
-    renderUsers();
+    renderUsers(search.value);
 })
+
+search.addEventListener("input",(e)=>{
+  renderUsers(search.value)
+})
+
+
+
+
+
+
+
+
