@@ -51,7 +51,6 @@ registerForm.addEventListener("submit",(e) => {
     e.preventDefault();
 
     if (!validateInput()){
-        alert("Wrong information")
         return;
     }
 
@@ -81,7 +80,6 @@ let renderUsers = (searcher) => {
          getUsers = getUsers.filter((user)=>{
              return user.name.toUpperCase().includes(searcher.toUpperCase());
          })
-            console.log(getUsers)
 
         }
 
