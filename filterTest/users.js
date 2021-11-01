@@ -11,7 +11,11 @@ let search = document.getElementById("search");
 let getUsersFromLccalStorage = () => {
     let usersAll = localStorage.getItem("users")
 
-    return JSON.parse(usersAll);
+    try {
+        return JSON.parse(usersAll)
+    }catch (e) {
+        return []
+    }
 }
 
 let usersArray = getUsersFromLccalStorage();
