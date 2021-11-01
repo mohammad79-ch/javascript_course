@@ -11,7 +11,11 @@ let search = document.getElementById("search");
 let getUsersFromLccalStorage = () => {
     let usersAll = localStorage.getItem("users")
 
-    return JSON.parse(usersAll);
+    try {
+        return JSON.parse(usersAll)
+    }catch (e) {
+        return []
+    }
 }
 
 let usersArray = getUsersFromLccalStorage();
@@ -51,7 +55,6 @@ registerForm.addEventListener("submit",(e) => {
     e.preventDefault();
 
     if (!validateInput()){
-        alert("Wrong information")
         return;
     }
 
@@ -81,7 +84,6 @@ let renderUsers = (searcher) => {
          getUsers = getUsers.filter((user)=>{
              return user.name.toUpperCase().includes(searcher.toUpperCase());
          })
-            console.log(getUsers)
 
         }
 
