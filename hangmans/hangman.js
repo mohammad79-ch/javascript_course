@@ -3,6 +3,7 @@ const Hangman = function (word,limit){
     this.limit = limit;
     this.guessesWord = [];
     this.showWordPara = document.getElementById("guessWord");
+    this.showLimitOnPage = document.getElementById("showLimitOnPage");
 }
 
 Hangman.prototype.getpuzzle = function (){
@@ -11,7 +12,7 @@ Hangman.prototype.getpuzzle = function (){
     this.word.forEach((letter)=>{
         if (this.guessesWord.includes(letter) || letter === " "){
             puzzle += letter;
-        }else{
+        }else {
             puzzle += "*";
         }
     })
@@ -32,7 +33,6 @@ Hangman.prototype.getgusses = function (guess){
         this.limit--;
     }
 
-    console.log(this.limit)
 
 }
 
@@ -43,13 +43,32 @@ window.addEventListener("DOMContentLoaded",function (){
         game.showWordPara.textContent += "*";
     }
 
+    game.showLimitOnPage.textContent = game.limit;
+
+
 });
 
 document.getElementById("hangmanInput").addEventListener("keypress",function (e){
 
     game.getgusses(e.key)
 
+    if (!game.limit) {
+        document.getElementById("wrong").style.display = "block";
+        location.reload();
+        return;
+    }
+
+    game.showLimitOnPage.textContent = game.limit;
+
     console.log(game.getpuzzle())
+
+    let wordtemprary = game.word.join("");
+    if (wordtemprary.includes(game.showWordPara.textContent.toLowerCase())){
+        document.getElementById("success").style.display = "block";
+        location.reload();
+    }
+
+
 })
 
 
