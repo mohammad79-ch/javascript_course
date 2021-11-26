@@ -23,13 +23,3 @@
 // getDataCallback((err,data) => {
 //     console.log(err,data)
 // })
-
-let result = new Promise((resolve,reject) => {
-    reject("I'm here")
-})
-
-result.then((data) => {
-    console.log(data)
-}).catch((err)=>{
-    console.log(err)
-})
