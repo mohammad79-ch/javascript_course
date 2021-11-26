@@ -1,26 +1,25 @@
-const req = new XMLHttpRequest();
+// const local = "US";
+//
+// let country = document.getElementById("country");
+//
+// fetch("https://restcountries.com/v3.1/all").then((res)=>{
+//     return res.json();
+// }).then((resS)=>{
+//     resS.forEach(item =>{
+//         console.log(item)
+//        country.innerHTML += `<li>${item.continents} _ ${item.cca2}</li>`
+//     })
+// })
 
-const local = "US";
+let getDetails = async ()=>{
+   let response =  await fetch("http://ip-api.com/json/24.48.0.1")
+       if (response.status === 200){
+         return response.json()
+       }else{
+           throw new Error("not found");
+       }
+}
 
-const country = document.getElementById("country");
-
-req.addEventListener("readystatechange",(e)=>{
-    if (e.target.readyState === 4 && e.target.status === 200){
-
-        console.log("mamad");
-
-        let data = JSON.parse(e.target.responseText);
-
-        data.forEach((item)=>{
-           country.innerHTML += `
-           <li>${item.name.common}</li>
-           `
-        })
-
-        console.log("here");
-
-    }
+getDetails().then((res)=>{
+    console.log(res.country)
 })
-
-req.open("GET","https://restcountries.com/v3.1/all",false);
-req.send();
