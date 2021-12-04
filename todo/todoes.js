@@ -21,7 +21,6 @@ ul_list_todo.addEventListener('click',function (e){
             e.target.parentElement.style.textDecoration = "none"
 
         }
-
     }
 })
 
