@@ -8,8 +8,8 @@ function animateForm(){
            const input = arrow.previousElementSibling;
            const parent = input.parentElement;
            const nextForm = parent.nextElementSibling;
-            validateInput(input)
-           if (input.type === 'text' && validateInput(input)){
+
+           if (validateInput(input)){
                 nextSlide(parent,nextForm)
            }
 
@@ -34,7 +34,9 @@ function color(element,color){
 }
 
 function nextSlide(parent,nextform){
-
+parent.style.display = "none";
+parent.classList.remove('d-flex');
+nextform.style.display = "flex";
 
 }
 
