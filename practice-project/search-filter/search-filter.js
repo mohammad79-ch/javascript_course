@@ -3,42 +3,25 @@ const content_list = document.querySelector(".content-list");
 let tableList = document.getElementById("table_list");
 let registerData = document.getElementById("registerData");
 
+let name = document.getElementById("nameInput");
+let family = document.getElementById("famlilyInput");
+let age = document.getElementById("ageSelect");
 
-const list = [
-    {
-        name: "Mohammad",
-        family: "Chenani",
-        age: 21
-    },
-    {
-        name: "Ali",
-        family: "Chenani",
-        age: 28
-    },
-    {
-        name: "Fatemeh",
-        family: "Chenani",
-        age: 25
-    },
-    {
-        name : "Khadijah",
-        family : "Chenani",
-        age : 23
-    },
-    {
-        name : "Hossain",
-        family : "Chenani",
-        age : 53
-    },
-    {
-        name : "Zahra",
-        family : "Chenani",
-        age : 47
+let resultNames = [];
+
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+    if (getDataFromLocalStorage() !== null) {
+        let resultNames = getDataFromLocalStorage();
+        shareDataInView(resultNames);
     }
-];
 
-function shareDataInView() {
-    list.forEach((item) => {
+})
+
+function shareDataInView(arrayData) {
+    tableList.innerHTML = "";
+    arrayData.forEach((item) => {
         tableList.innerHTML += `
            <tr>
            <td>${item.name}</td>
@@ -48,10 +31,6 @@ function shareDataInView() {
         `
     })
 }
-
-document.addEventListener("DOMContentLoaded",()=>{
-    shareDataInView();
-})
 
 search.addEventListener("input", (e) => {
     let searchValue = e.target.value;
@@ -75,24 +54,64 @@ search.addEventListener("input", (e) => {
 
 
 registerData.addEventListener("click",(e)=>{
-    let nameInput = document.getElementById("nameInput").value.trim();
+
+    let resultNames = getDataFromLocalStorage();
+
+    let nameInput = name.value.trim();
     let familyInput = document.getElementById("famlilyInput").value.trim();
     let ageSelect = document.getElementById("ageSelect").value.trim();
 
     validateData(nameInput,familyInput,ageSelect);
 
+    let arrayDataInput = [];
+
+    resultNames.push({
+        name : nameInput,
+        family : familyInput,
+        age : ageSelect,
+    })
+
+    localStorage.setItem("names", JSON.stringify(resultNames));
+
+    shareDataInView(resultNames);
+
 });
 
-
 function validateData(nameInput, familyInput, ageSelect) {
+    let status = true;
+
     if (nameInput === ""){
-      alert("here i")
+      name.classList = "error"
+        status = false;
+    }else{
+        name.classList = "success"
     }
 
     if (familyInput === ""){
-      alert("here f")
+        family.classList = "error"
+        status = false;
+    }else{
+        family.classList = "success"
     }
 
+    if (status){
+        shareDataInView(resultNames);
+    }
 
+}
+
+function addToLocalStorage(){
+
+}
+
+function getDataFromLocalStorage(){
+
+    let names = localStorage.getItem("names")
+
+    try {
+        return JSON.parse(names)
+    }catch (e) {
+        return []
+    }
 }
 
