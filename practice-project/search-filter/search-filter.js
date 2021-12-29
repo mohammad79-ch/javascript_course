@@ -7,13 +7,11 @@ let name = document.getElementById("nameInput");
 let family = document.getElementById("famlilyInput");
 let age = document.getElementById("ageSelect");
 
-let resultNames = [];
-
+let resultNames = getDataFromLocalStorage() ?? [];
 
 
 document.addEventListener("DOMContentLoaded",()=>{
     if (getDataFromLocalStorage() !== null) {
-        let resultNames = getDataFromLocalStorage();
         shareDataInView(resultNames);
     }
 
@@ -35,19 +33,12 @@ function shareDataInView(arrayData) {
 search.addEventListener("input", (e) => {
     let searchValue = e.target.value;
     tableList.innerHTML = "";
-    let filter = list.filter((item)=>{
+    console.log(resultNames)
+    let filter = resultNames.filter((item)=>{
         return item.name.toLowerCase().includes(searchValue.toLowerCase());
     });
 
-    filter.forEach((item)=>{
-        tableList.innerHTML += `
-           <tr>
-           <td>${item.name}</td>
-           <td>${item.family}</td>
-           <td>${item.age}</td>
-           </tr>
-        `
-    })
+    shareDataInView(filter)
 });
 
 
@@ -55,25 +46,29 @@ search.addEventListener("input", (e) => {
 
 registerData.addEventListener("click",(e)=>{
 
-    let resultNames = getDataFromLocalStorage();
+    let resultNames = getDataFromLocalStorage() ?? [];
 
     let nameInput = name.value.trim();
     let familyInput = document.getElementById("famlilyInput").value.trim();
     let ageSelect = document.getElementById("ageSelect").value.trim();
 
-    validateData(nameInput,familyInput,ageSelect);
+    if (!validateData(nameInput,familyInput,ageSelect)){
+        return;
+    }
 
     let arrayDataInput = [];
-
     resultNames.push({
         name : nameInput,
         family : familyInput,
         age : ageSelect,
     })
-
+    console.log("here")
     localStorage.setItem("names", JSON.stringify(resultNames));
 
     shareDataInView(resultNames);
+
+    name.value = "";
+    family.value = "";
 
 });
 
@@ -96,7 +91,10 @@ function validateData(nameInput, familyInput, ageSelect) {
 
     if (status){
         shareDataInView(resultNames);
+        return status;
     }
+
+    return status;
 
 }
 
