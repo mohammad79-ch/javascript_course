@@ -1,0 +1,12 @@
+#toast-position{
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+}
+.toast_box {
+    padding: 1rem;
+    background: rebeccapurple;
+    color: #fff;
+    border-radius: 5px;
+    margin: 5px;
+}
