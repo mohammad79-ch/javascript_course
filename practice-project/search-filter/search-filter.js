@@ -33,7 +33,6 @@ function shareDataInView(arrayData) {
 search.addEventListener("input", (e) => {
     let searchValue = e.target.value;
     tableList.innerHTML = "";
-    console.log(resultNames)
     let filter = resultNames.filter((item)=>{
         return item.name.toLowerCase().includes(searchValue.toLowerCase());
     });
