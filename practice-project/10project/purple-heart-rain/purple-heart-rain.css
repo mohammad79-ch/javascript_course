@@ -1,0 +1,22 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+
+.heart {
+    position: fixed;
+    top: 1vh;
+    transform: translateY(0);
+    animation: fall 3s linear forwards;
+    font-size: 20px;
+}
+
+@keyframes fall {
+    from{
+        transform: translateY(0);
+    }
+
+    to{
+        transform: translateY(105vh);
+    }
+}

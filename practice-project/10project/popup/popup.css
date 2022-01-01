@@ -1,14 +1,13 @@
-/*body {*/
-/*    background: rebeccapurple;*/
-/*    color: #fff;*/
-/*    font-family: inherit;*/
-/*    font-weight: bold;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    min-height: 100vh;*/
-/*    font-size: 25px;*/
-/*}*/
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: rgba(0,0,0,0.5);
+
+}
 
 .popup{
     transform: translateY(-100%);
