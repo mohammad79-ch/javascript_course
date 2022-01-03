@@ -10,6 +10,8 @@ function createHeart(){
     heart.style.animationDirection = Math.random() * 2 + 3 + "s"
 
     document.body.appendChild(heart);
+
+
 }
 
 setInterval(createHeart,500)
