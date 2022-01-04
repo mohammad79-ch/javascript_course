@@ -1,0 +1,19 @@
+.container {
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+}
+
+#images {
+    margin: 50px auto;
+    display: flex;
+    transition: transform 0.3s linear;
+    transform:translateX(0);
+}
+
+
+img {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
