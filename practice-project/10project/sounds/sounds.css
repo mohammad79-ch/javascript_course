@@ -1,0 +1,14 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button{
+    background: rebeccapurple;
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 5px;
+    border: none;
+}
