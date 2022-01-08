@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/100-Projects-HTML-CSS-JavaScript" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Amazing-Js-Projects" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Game" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Game/Game1" vcs="Git" />
